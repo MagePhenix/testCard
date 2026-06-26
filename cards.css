@@ -1,0 +1,326 @@
+@property --dvw {
+    syntax: "<length>";
+    initial-value: 0px;
+    inherits: false;
+}
+
+@property --dvh {
+    syntax: "<length>";
+    initial-value: 0px;
+    inherits: false;
+}
+
+:root {
+    --colorDark: rgb(18,18,18);
+    --colorLight: rgb(180,180,180);
+    --colorYellow: rgb(180,180,18);
+    --colorCyan: rgb(18,180,180);
+    --colorGreen: rgb(18,180,18);
+    --colorMagenta: rgb(180,18,180);
+    --colorRed: rgb(180,18,18);
+    --colorBlue: rgb(18,18,180);
+    --colorWhite: #ffffff;
+    --colorBlack: #000000;
+    --sizeGrid: calc(min(var(--intWidth), var(--intHeight)) / 20);
+    --sizeGridPx: calc(1px * var(--sizeGrid));
+    --sizeCenterCircle: calc((100dvmin / 2) - (var(--sizeGridPx))/2);
+    --sizeCornerCircles: 15dvmin;
+    --sizeCornerPlus: calc(var(--sizeCornerCircles) / 3);
+    --sizeCornerCirclePosition: 2dvmin;
+
+    --dvw: 100dvw;
+    --dvh: 100dvh;
+    --intWidth: calc(10000 * tan(atan2(var(--dvw), 10000px)));
+    --intHeight: calc(10000 * tan(atan2(var(--dvh), 10000px)));
+    
+
+    --diagonalAngle: calc(atan2(var(--dvh), var(--dvw)));
+    --verticalGridHeight: calc(1px * (round(down, var(--intHeight), calc(2 * (var(--sizeGrid))))));
+    --horizontalGridWidth: calc(1px * (round(down, var(--intWidth), calc(2 * (var(--sizeGrid))))));
+
+    --sizeColorSquare: calc(var(--sizeGridPx) * 2)
+}
+
+body,html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--colorDark);
+}
+
+.centeringFrame {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.outline {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    box-sizing: border-box;
+
+    border-color: var(--colorLight) ;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px;
+}
+
+.gridLines {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    box-sizing: border-box;
+    
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.gridV {
+    background-size: var(--horizontalGridWidth) 100dvh;
+    background-image: 
+        repeating-linear-gradient(to right, transparent, transparent calc(var(--sizeGridPx) - 1px), var(--colorLight) calc(var(--sizeGridPx) - 1px), var(--colorLight) var(--sizeGridPx)),
+        linear-gradient(to right, transparent calc(50% - 2px), var(--colorLight) calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px)),
+        linear-gradient(to right, var(--colorLight), 1px, transparent 1px)
+        /* ,repeating-linear-gradient(to right, var(--colorCyan), var(--colorMagenta) var(--sizeGridPx)) */
+    ;
+}
+
+.gridH {
+    background-size: 100dvw var(--verticalGridHeight);
+    background-image: 
+        repeating-linear-gradient(to bottom, transparent, transparent calc(var(--sizeGridPx) - 1px), var(--colorLight) calc(var(--sizeGridPx) - 1px), var(--colorLight) var(--sizeGridPx)),
+        linear-gradient(to bottom, var(--colorLight) 1px, transparent 1px),
+        linear-gradient(to bottom, transparent calc(50% - 2px), var(--colorLight) calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px))
+    ;
+}
+
+.cornerCircle {
+    height: var(--sizeCornerCircles);
+    width: var(--sizeCornerCircles);
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+    position: fixed;
+
+    border-color: var(--colorLight);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 50%;
+
+    background-color: var(--colorDark);
+    background-size: var(--sizeCornerPlus) var(--sizeCornerPlus);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: 
+        linear-gradient(to right, transparent calc(50% - 1px), var(--colorLight) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)),
+        linear-gradient(to bottom, transparent calc(50% - 1px), var(--colorLight) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px));
+}
+
+.topLeftCircle {
+    left: var(--sizeCornerCirclePosition);
+    top: var(--sizeCornerCirclePosition);
+}
+.topRightCircle {
+    right: var(--sizeCornerCirclePosition);
+    top: var(--sizeCornerCirclePosition);
+}
+.bottomLeftCircle {
+    left: var(--sizeCornerCirclePosition);
+    bottom: var(--sizeCornerCirclePosition);
+}
+.bottomRightCircle {
+    right: var(--sizeCornerCirclePosition);
+    bottom: var(--sizeCornerCirclePosition);
+}
+
+.centerLines {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    box-sizing: border-box;
+
+    background-size: 100dvmin 100dvmin;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: 
+        linear-gradient(45deg, transparent calc(50% - 1px), var(--colorLight) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)),
+        linear-gradient(-45deg, transparent calc(50% - 1px), var(--colorLight) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)),
+        radial-gradient(var(--colorDark) calc(var(--sizeCenterCircle) - 1px), var(--colorLight) calc(var(--sizeCenterCircle) - 1px) calc(var(--sizeCenterCircle) + 1px), transparent calc(var(--sizeCenterCircle) + 1px));
+}
+
+.cornerLines {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    box-sizing: border-box;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: 
+        linear-gradient(var(--diagonalAngle), transparent calc(50% - 1px), var(--colorLight) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)),
+        linear-gradient(calc(-1 * var(--diagonalAngle)), transparent calc(50% - 1px), var(--colorLight) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px));
+}
+
+.centerFrame {
+
+    height: calc(7 * var(--sizeGridPx));
+    width: calc(15 * var(--sizeGridPx));
+    position: absolute;
+    box-sizing: border-box;
+/* 
+    border-color: var(--colorMagenta) ;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px; */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.sideGradients {
+    height: 100%;
+    width: calc(.5 * var(--sizeGridPx));
+    box-sizing: border-box;
+/* 
+    border-color: var(--colorGreen) ;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px; */
+}
+
+.sideGradientL {
+    background-size: calc(100% / 4) 100%;
+    background-image: 
+        linear-gradient(to right, var(--colorLight), var(--colorDark), var(--colorLight))
+    ;
+}
+
+.sideGradientR {
+    background-size: 100% calc(100% / 4);
+    background-image: 
+        linear-gradient(to bottom, var(--colorLight), var(--colorDark), var(--colorLight))
+    ;
+}
+
+.centerColorsFrame {
+    height: 100%;
+    width: calc(14 * var(--sizeGridPx));
+    box-sizing: border-box;
+
+    /* border-color: var(--colorCyan) ;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.centerColors {
+    width: 100%;
+    box-sizing: border-box;
+/* 
+    border-color: var(--colorMagenta) ;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px; */
+}
+
+.centerHalfSolids {
+    height: calc(1 * var(--sizeGridPx));
+
+    background-repeat: no-repeat;
+    background-image: 
+        linear-gradient(to right, 
+            var(--colorBlue) calc(1 * var(--sizeColorSquare)), 
+            var(--colorDark) calc(1 * var(--sizeColorSquare)) calc(2 * var(--sizeColorSquare)), 
+            var(--colorMagenta) calc(2 * var(--sizeColorSquare)) calc(3 * var(--sizeColorSquare)), 
+            var(--colorDark) calc(3 * var(--sizeColorSquare)) calc(4 * var(--sizeColorSquare)), 
+            var(--colorCyan) calc(4 * var(--sizeColorSquare)) calc(5 * var(--sizeColorSquare)), 
+            var(--colorDark) calc(5 * var(--sizeColorSquare)) calc(6 * var(--sizeColorSquare)), 
+            var(--colorLight) calc(6 * var(--sizeColorSquare)))
+    ;
+}
+
+.centerSolids {
+    height: calc(2 * var(--sizeGridPx));
+    
+    background-repeat: no-repeat;
+    background-image: 
+        linear-gradient(to right, 
+            var(--colorLight) calc(1 * var(--sizeColorSquare)), 
+            var(--colorYellow) calc(1 * var(--sizeColorSquare)) calc(2 * var(--sizeColorSquare)), 
+            var(--colorCyan) calc(2 * var(--sizeColorSquare)) calc(3 * var(--sizeColorSquare)), 
+            var(--colorGreen) calc(3 * var(--sizeColorSquare)) calc(4 * var(--sizeColorSquare)), 
+            var(--colorMagenta) calc(4 * var(--sizeColorSquare)) calc(5 * var(--sizeColorSquare)), 
+            var(--colorRed) calc(5 * var(--sizeColorSquare)) calc(6 * var(--sizeColorSquare)), 
+            var(--colorBlue) calc(6 * var(--sizeColorSquare)))
+    ;
+}
+
+.centerSaturation {
+    height: calc(2 * var(--sizeGridPx));
+
+    background-repeat: no-repeat;
+    background-image: 
+        linear-gradient(to right, 
+            hsl(0 0 0) calc(1 * var(--sizeColorSquare)), 
+            hsl(0 0 10) calc(1 * var(--sizeColorSquare)) calc(2 * var(--sizeColorSquare)), 
+            hsl(0 0 25) calc(2 * var(--sizeColorSquare)) calc(3 * var(--sizeColorSquare)), 
+            hsl(0 0 50) calc(3 * var(--sizeColorSquare)) calc(4 * var(--sizeColorSquare)), 
+            hsl(0 0 75) calc(4 * var(--sizeColorSquare)) calc(5 * var(--sizeColorSquare)), 
+            hsl(0 0 90) calc(5 * var(--sizeColorSquare)) calc(6 * var(--sizeColorSquare)), 
+            hsl(0 0 100) calc(6 * var(--sizeColorSquare)))
+    ;
+}
+
+.centerSaturationGradient {
+    height: calc(1 * var(--sizeGridPx));
+
+    background-image: 
+        linear-gradient(to right, var(--colorWhite), var(--colorBlack))
+    ;
+}
+
+.centercolorGradient {
+    height: calc(1 * var(--sizeGridPx));
+
+    background-image: 
+        linear-gradient(to right, var(--colorMagenta), var(--colorRed), var(--colorYellow), var(--colorGreen), var(--colorCyan), var(--colorBlue))
+    ;
+
+}
+
+.testCounter {
+    counter-reset: number var(--sizeGrid);
+
+    position: fixed;
+    right: 0;
+    width: auto;
+    height: auto;
+    font-size: 2rem;
+
+    text-align: center;
+    color: var(--colorWhite);
+
+    background-color: var(--colorRed);
+
+    &::before {
+        content: counter(number);
+    }
+}
