@@ -307,7 +307,7 @@ body {
 }
 
 .testCounter {
-    counter-reset: number var(--sizeGrid);
+    counter-reset: number var(--intWidth);
 
     position: fixed;
     right: 0;
@@ -333,4 +333,27 @@ body {
 
     background-color: rgba(255, 0, 255, 0);
     border: none;
+}
+
+#screenSizeLbl {
+
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    box-sizing: border-box;
+    bottom: calc(1.5 * var(--sizeGridPx));
+    padding: .5vmin;
+
+    counter-reset: x-size var(--intWidth) y-size var(--intHeight);
+    
+    background-color: var(--colorDark);
+    color: var(--colorLight);
+
+    font-size: 20pt;
+    text-align: center;
+    
+
+    &::before {
+        content: counter(x-size) " x "counter(y-size);
+    }
 }
