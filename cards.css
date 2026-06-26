@@ -324,3 +324,13 @@ body {
         content: counter(number);
     }
 }
+
+#fullscreenBtn {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    box-sizing: border-box;
+
+    background-color: rgba(255, 0, 255, 0);
+    border: none;
+}
